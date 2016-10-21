@@ -1,7 +1,7 @@
-/** 
+/**
  * any2pdf.js - Convert documents to pdf
  *
- * Copyright (c) 2016 99X Technology	
+ * Copyright (c) 2016 99X Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,3 +25,19 @@
  * Contributor(s):
  *    Shamal Perera, Krishnakripa Jayakumar, Malshani Nanayakkara
  */
+
+(function () {
+  function convertXMLToPDF () {
+    var file = 'examples/HelloWorld/word/document.xml'
+    var rawfile = new XMLHttpRequest()
+    rawfile.open('GET', file, false)
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          var allText = rawFile.responseText
+          alert(allText)
+        }
+      }
+    }
+  }
+})()
