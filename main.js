@@ -4,4 +4,4 @@ var require = function(path) {
 
 var greetings = require("src/any2pdf.js");
 greetings.sayHelloInEnglish();
-console.log(greetings);
+//console.log(greetings);
