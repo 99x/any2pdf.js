@@ -1,0 +1,23 @@
+{
+  "name": "any2pdf.js",
+  "version": "1.0.0",
+  "description": "This library contains functionality which can help convert documents to PDF using javascript on the browser. This utility is beneficial especially in cases where PDF conversion is a hassle to handle on the server, the server is taking a huge load converting thousands of documents to PDFs in a short time, or handling the conversion of documents on instances where PDF conversion is not a straightforward thing to do (eg: mobile devices).",
+  "main": "any2pdf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/99xt/any2pdf.js.git"
+  },
+  "keywords": [
+    "pdf",
+    "docx"
+  ],
+  "author": "Shamal Perera, Krishnakripa Jayakumar, Malshani Nanayakkara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/99xt/any2pdf.js/issues"
+  },
+  "homepage": "https://github.com/99xt/any2pdf.js#readme"
+}
