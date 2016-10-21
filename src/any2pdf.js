@@ -25,3 +25,14 @@
  * Contributor(s):
  *    Shamal Perera, Krishnakripa Jayakumar, Malshani Nanayakkara
  */
+
+var pdfCreation = require('./createPdf');
+var JSZip = require("jszip");
+
+var zip = new JSZip();
+
+var something = function () {
+ return pdfCreation.createPdfDocDefinition();
+}
+
+console.log();
