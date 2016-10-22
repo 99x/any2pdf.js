@@ -51,21 +51,3 @@ function openFile(path){
 }
 
 fs.createReadStream('/Users/shamal/Documents/Projects/Hello Docx.docx').pipe(unzip.Extract({ path: '/Users/shamal/Documents/Projects/' }));
-/*
-openFile("/Users/shamal/Documents/Projects/Hello Docx.docx.zip").then(function(data){
-    //console.log(data);
-    // xml2js.parseString(data, function(err, result){
-    //  console.dir(result);
-
-    // });
-    var open = openArrayBuffer(data);
-    open.write("aa", data)
-    // XMLExtract(data, 'w:body', false, (error, element) => {
-    //         if(error){
-    //             throw new Error(error);
-    //         }
-    //         console.log(element);
-
-    //     });
-});
-*/
