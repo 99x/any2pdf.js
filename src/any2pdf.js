@@ -31,8 +31,5 @@ var JSZip = require("jszip");
 
 var zip = new JSZip();
 
-var something = function () {
- return pdfCreation.createPdfDocDefinition();
-}
 
 console.log();

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+	<meta charset='utf-8'>
+	<title>my first pdfmake example</title>
+	<script src='bower_components/pdfmake/build/pdfmake.min.js'></script>
+	<script src='bower_components/pdfmake/build/vfs_fonts.js'></script>
+    <script src='src/createPdf.js'></script>
+    <script src='src/any2pdf.js'></script>
+</head>
+
+<body>
+
+	<script>
+        var docDefinition = something();
+        pdfMake.createPdf(docDefinition).open();
+    </script>

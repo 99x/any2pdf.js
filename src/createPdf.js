@@ -1,7 +1,7 @@
 module.exports = {
-    createPdfDocDefinition: function () {
+    createPdfDocDefinition: function (text1, text2) {
 
-        /*        var docDefinition = {
+/*                var docDefinition = {
                     content: [
                         { text: 'This is a header', style: 'header' },
                         'No styling here, this is a standard paragraph',
@@ -20,8 +20,6 @@ module.exports = {
                         }
                     }
                 };*/
-
-
         function createStyle(styleParams) {
 
             var styleParamString = "";
@@ -48,12 +46,12 @@ module.exports = {
 
             return {
                 content: [
-                    createIndividualContent("This is a header", "header"),
-                    createIndividualContent("Another text", "anotherStyle")
+                    createIndividualContent(text1, "header"),
+                    createIndividualContent(text2, "anotherStyle")
                 ],
                 styles: {
                     header: createStyle(['fontSize: 22', 'bold: true']),
-                    anotherStyle: createStyle(["italics: true" , "alignment: \"right\""])
+                    anotherStyle: createStyle(["italics: true" , "alignment: right"])
                 }
             }
         }
