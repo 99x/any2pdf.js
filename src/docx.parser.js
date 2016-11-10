@@ -86,7 +86,6 @@ function doFirst(data) {
 	});
 }
 function doNext() {
-	console.log('fuck -' + text1);
 	var definition = pdfCreation.createPdfDocDefinition(text1, text2);
 
 	console.log(definition);
