@@ -2,17 +2,29 @@
 <html lang='en'>
 
 <head>
-	<meta charset='utf-8'>
-	<title>my first pdfmake example</title>
-	<script src='bower_components/pdfmake/build/pdfmake.min.js'></script>
-	<script src='bower_components/pdfmake/build/vfs_fonts.js'></script>
-    <script src='src/createPdf.js'></script>
-    <script src='src/any2pdf.js'></script>
+    <meta charset='utf-8'>
+    <title>my first pdfmake example</title>
+    <!--<script src='bower_components/pdfmake/build/pdfmake.min.js'></script>-->
+    <!--<script src='bower_components/pdfmake/build/vfs_fonts.js'></script>-->
+    <!--<script src='src/createPdf.js'></script>-->
+    <!--<script src='src/any2pdf.js'></script>-->
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="lib/zipjs/zip.js"></script>
+    <script type="text/javascript" src="src/compilers/docx.compiler.js"></script>
+    <!--<script type="text/javascript" src="main.js"></script>-->
 </head>
 
 <body>
 
-	<script>
-        var docDefinition = something();
-        pdfMake.createPdf(docDefinition).open();
-    </script>
+<input type="file" id="fileUploader"/>
+<script>
+//    var docDefinition = something();
+//    pdfMake.createPdf(docDefinition).open();
+    $('#fileUploader').on('change', function (e) {
+        console.log(e.target.files[0]);
+        docx.compile(e.target.files[0]);
+    });
+
+</script>
+</body>
+</html>
