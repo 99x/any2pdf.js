@@ -9,9 +9,9 @@ This library contains functionality which can help convert documents to PDF usin
 
 ## Supported File Types
 
-* .docx
-* .png
-* .jpeg / .jpg
+* .docx - We will initlally support only for docx files
+* .png - May be we could integrate a popular .png library here 
+* .jpeg / .jpg  May be we could integrate a popular .jpg library here
 * other file types will be compatible soon...
 
 ## Installation
