@@ -5,8 +5,8 @@ var docx = (function(){
     'use strict';
     zip.workerScriptsPath = 'lib/zipjs/';
     //Configuration files
-    var configs = ['docProps/core.xml', 'word/document.xml'];
-    function compile(blob){
+    var configs = ['word/document.xml'];
+    function compile(blob, p){
         var files = [];
         zip.createReader(new zip.BlobReader(blob), function(reader){
             reader.getEntries(function(entries){
@@ -17,13 +17,22 @@ var docx = (function(){
                         }
                     });
                 });
-                return files;
+
+                p(files);
             });
         });
     }
 
+    function extract(content){
+        var document = new XmlDocument(content);
+        console.log(document)
+        console.log(document.children[0].children[0].children[0].children[0].val)
+
+    }
+
     return {
-        compile : compile
+        compile: compile,
+        extract: extract
     }
 })();
 

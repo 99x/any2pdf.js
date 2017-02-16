@@ -38,5 +38,9 @@
     "xml-extract": "^1.1.0",
     "xml2js": "^0.4.17",
     "zip": "^1.2.0"
+  },
+  "dependencies": {
+    "xml-reader": "^2.4.3",
+    "xmldoc": "^1.0.0"
   }
 }
