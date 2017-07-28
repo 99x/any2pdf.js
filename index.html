@@ -9,8 +9,11 @@
     <!--<script src='src/createPdf.js'></script>-->
     <!--<script src='src/any2pdf.js'></script>-->
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="node_modules/sax/lib/sax.js"></script>
+    <script type="text/javascript" src="node_modules/xmldoc/lib/xmldoc.js"></script>
     <script type="text/javascript" src="lib/zipjs/zip.js"></script>
     <script type="text/javascript" src="src/compilers/docx.compiler.js"></script>
+
     <!--<script type="text/javascript" src="main.js"></script>-->
 </head>
 
@@ -21,9 +24,25 @@
 //    var docDefinition = something();
 //    pdfMake.createPdf(docDefinition).open();
     $('#fileUploader').on('change', function (e) {
-        console.log(e.target.files[0]);
-        docx.compile(e.target.files[0]);
+        //console.log(e.target.files[0]);
+        docx.compile(e.target.files[0], function (entries) {
+            entries.forEach(function(entry){
+                // get first entry content as text
+                entry.getData(new zip.TextWriter(), function(text) {
+                    // text contains the entry data as a String
+                    //console.log(text);
+                    docx.extract(text);
+                }, function(current, total) {
+                    // onprogress callback
+                });
+                return;
+            });
+        });
+
+
     });
+    
+    
 
 </script>
 </body>

@@ -108,7 +108,7 @@ function doNext() {
 	pdfDoc.end();
 }
 
-openFile("E:/any2pdf.js/src/HelloWorld.docx/word/document.xml")
+openFile("HelloWorld.docx/word/document.xml")
 .then(function (data) {
 	doFirst(data);
 	doNext();
