@@ -24,9 +24,36 @@ var docx = (function(){
     }
 
     function extract(content){
-        var document = new XmlDocument(content);
+        /*var document = new XmlDocument(content);
         console.log(document)
-        console.log(document.children[0].children[0].children[0].children[0].val)
+        console.log(document.children[0].children[0].children[0].children[0].val)*/
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(content, "text/xml");
+        console.log(content);
+        
+        var wordNodes = xmlDoc.getElementsByTagName('t');
+
+        console.log(xmlDoc.getElementsByTagName('t'));
+        
+        var wordLine = "";
+        for (var i = 0; i < wordNodes.length; i++) {
+            wordLine = wordLine + wordNodes[i].innerHTML + "<br/>";
+        }
+
+        $('#content').html(wordNodes);
+
+        var doc = new jsPDF()
+
+        doc.fromHTML(wordLine, 15, 15, {
+            'width': 170
+        });
+        /*doc.fromHTML($('body').get(0), 15, 15, {
+            'width': 170
+        });*/
+
+        //doc.text(wordLine, 10, 10)
+        doc.save('output.pdf')
+
 
     }
 
