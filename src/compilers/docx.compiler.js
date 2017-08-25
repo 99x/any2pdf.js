@@ -1,67 +1,41 @@
-/**
- * Created by shamal on 12/11/16.
- */
-var docx = (function(){
-    'use strict';
-    zip.workerScriptsPath = 'lib/zipjs/';
-    //Configuration files
-    var configs = ['word/document.xml'];
-    function compile(blob, p){
-        var files = [];
-        zip.createReader(new zip.BlobReader(blob), function(reader){
-            reader.getEntries(function(entries){
-                entries.forEach(function(entry){
-                    configs.forEach(function (config) {
-                        if(entry.filename === config){
-                            files.push(entry);
-                        }
-                    });
-                });
+var xmlreader = require('xmlreader');
+var xmldoc = require('xmldoc');
+var Q = require('q');
 
-                p(files);
-            });
-        });
+var extractParaghraphs = function (xml) {
+    var deferred = Q.defer();
+    var document = new xmldoc.XmlDocument(xml);
+    console.log(document.toString());
+
+    xmlreader.read(document.toString(), function (err, res) {
+        if (err) deferred.reject(err);
+        deferred.resolve(res['w:document']['w:body']['w:p']);
+    });
+    return deferred.promise;
+};
+
+var extractText = function (para) {
+    return para['w:r']['w:t'].text();
+}
+
+var extractParagraphProperty = function (para) {
+    var paragraphProperty = {
+        style: null,
     }
+    if(para['w:pPr'] && para['w:pPr']['w:pStyle'])
+        paragraphProperty.style = para['w:pPr']['w:pStyle'].attributes()['w:val'].toLowerCase();
+    return paragraphProperty;
+}
 
-    function extract(content){
-        /*var document = new XmlDocument(content);
-        console.log(document)
-        console.log(document.children[0].children[0].children[0].children[0].val)*/
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(content, "text/xml");
-        console.log(content);
-        
-        var wordNodes = xmlDoc.getElementsByTagName('t');
-
-        console.log(xmlDoc.getElementsByTagName('t'));
-        
-        var wordLine = "";
-        for (var i = 0; i < wordNodes.length; i++) {
-            wordLine = wordLine + wordNodes[i].innerHTML + "<br/>";
-        }
-
-        $('#content').html(wordNodes);
-
-        var doc = new jsPDF()
-
-        doc.fromHTML(wordLine, 15, 15, {
-            'width': 170
-        });
-        /*doc.fromHTML($('body').get(0), 15, 15, {
-            'width': 170
-        });*/
-
-        //doc.text(wordLine, 10, 10)
-        doc.save('output.pdf')
+module.exports = {
+    extractParaghraphs: extractParaghraphs,
+    extractText: extractText,
+    extractParagraphProperty: extractParagraphProperty
+}
 
 
-    }
 
-    return {
-        compile: compile,
-        extract: extract
-    }
-})();
+
 
 
 
