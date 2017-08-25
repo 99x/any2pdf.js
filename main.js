@@ -25,41 +25,47 @@ var docx = (function () {
     });
   }
 
-  // function extract(content) {
-  //   bundle.extractParaghraphs(content, function (para) {
-  //     console.log(para);
-  //     para.each(function (i, p) {
-  //       if (p['w:r']) {
-  //         bundle.extractText(p, function (text) {
-  //           console.log(text);
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
+  var docDefinition = {
+    content: [],
+    styles: {
+      heading1: {
+        fontSize: 22,
+        bold: true
+      },
+      heading2: {
+        fontSize: 20
+      }
+    }
+  };
 
   function extract(content) {
-    bundle.extractParaghraphs(content).then(function (paragraphs) {
-      console.log(paragraphs);
-      var text = [];
-      paragraphs.each(function (i, p) {
-        if (p['w:r']) {
-          text.push(bundle.extractText(p));
-        }
+    try {
+      bundle.extractParaghraphs(content).then(function (paragraphs) {
+        console.log(paragraphs);
+        var text = [];
+        paragraphs.each(function (i, p) {
+          if (p['w:r']) {
+            var t = {
+              text: bundle.extractText(p)
+            };
+            var s = bundle.extractParagraphProperty(p).style;
+            if (s) {
+              t['style'] = s;
+            }
+            text.push(t);
+          }
+        });
+        docDefinition.content = text;
+        print(docDefinition);
       });
-      var docDefinition = {content: text};
-      print(docDefinition);
-    });
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   function print(docDefinition) {
-    // var doc = new jsPDF({
-    //   orientation: 'p',
-    //   unit: 'mm',
-    //   format: 'a4',
-    // });
-    // doc.text(content, 10, 10);
-    // doc.save('output.pdf');
+
     pdfMake.createPdf(docDefinition).open();
   }
 

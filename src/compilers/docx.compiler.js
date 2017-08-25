@@ -9,21 +9,28 @@ var extractParaghraphs = function (xml) {
 
     xmlreader.read(document.toString(), function (err, res) {
         if (err) deferred.reject(err);
-        //console.log(res['w:document']);
         deferred.resolve(res['w:document']['w:body']['w:p']);
-        //cb(res['w:document']['w:body']['w:p']);
     });
     return deferred.promise;
 };
 
-var extractText = function(para){
-    //cb(para['w:r']['w:t'].text());
+var extractText = function (para) {
     return para['w:r']['w:t'].text();
+}
+
+var extractParagraphProperty = function (para) {
+    var paragraphProperty = {
+        style: null,
+    }
+    if(para['w:pPr'] && para['w:pPr']['w:pStyle'])
+        paragraphProperty.style = para['w:pPr']['w:pStyle'].attributes()['w:val'].toLowerCase();
+    return paragraphProperty;
 }
 
 module.exports = {
     extractParaghraphs: extractParaghraphs,
-    extractText: extractText    
+    extractText: extractText,
+    extractParagraphProperty: extractParagraphProperty
 }
 
 
