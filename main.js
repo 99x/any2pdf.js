@@ -43,6 +43,7 @@ var docx = (function () {
       bundle.extractParaghraphs(content).then(function (paragraphs) {
         console.log(paragraphs);
         var text = [];
+        var bulletList = [];
         paragraphs.each(function (i, p) {
           if (p['w:r']) {
             var t = {
@@ -51,10 +52,30 @@ var docx = (function () {
             var s = bundle.extractParagraphProperty(p).style;
             if (s) {
               t['style'] = s;
+              if (t.style === 'listparagraph') {
+                delete t.style;
+                bulletList.push(t.text);
+              } else if (bulletList.length > 0) {
+                text.push({
+                  ul: bulletList
+                });
+                bulletList = [];
+                text.push(t);
+              } else {
+                text.push(t);
+              }
             }
-            text.push(t);
+            else{
+              text.push(t);
+            }
           }
         });
+        if (bulletList.length > 0) {
+          text.push({
+            ul: bulletList
+          });
+          bulletList = [];
+        }
         docDefinition.content = text;
         print(docDefinition);
       });
