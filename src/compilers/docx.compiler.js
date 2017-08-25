@@ -1,42 +1,22 @@
-/**
- * Created by shamal on 12/11/16.
- */
-var docx = (function(){
-    'use strict';
-    zip.workerScriptsPath = 'lib/zipjs/';
-    //Configuration files
-    var configs = ['word/document.xml'];
-    function compile(blob, p){
-        var files = [];
-        zip.createReader(new zip.BlobReader(blob), function(reader){
-            reader.getEntries(function(entries){
-                entries.forEach(function(entry){
-                    configs.forEach(function (config) {
-                        if(entry.filename === config){
-                            files.push(entry);
-                        }
-                    });
-                });
+var xmlreader = require('xmlreader');
+var xmldoc = require('xmldoc');
 
-                p(files);
-            });
-        });
-    }
+var extractParaghraphs = function (xml, cb) {
+    var document = new xmldoc.XmlDocument(xml);
+    console.log(document.toString());
 
-    function extract(content){
-        var document = new XmlDocument(content);
-        console.log(document)
-        console.log(document.children[0].children[0].children[0].children[0].val)
+    xmlreader.read(document.toString(), function (err, res) {
+        if (err) return console.log(err);
+        //console.log(res['w:document']);
+        cb(res['w:document']['w:body']['w:p']);
+    });
+};
 
-    }
+var extractText = function(para, cb){
+    cb(para['w:r']['w:t'].text());
+}
 
-    return {
-        compile: compile,
-        extract: extract
-    }
-})();
-
-
-
-
-
+module.exports = {
+    extractParaghraphs: extractParaghraphs,
+    extractText: extractText
+}
