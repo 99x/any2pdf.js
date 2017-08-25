@@ -5,7 +5,6 @@
 var docx = (function () {
   'use strict';
 
-  var Q = require('q');
   zip.workerScriptsPath = 'lib/zipjs/';
   //Configuration files
   var configs = ['word/document.xml'];
@@ -26,23 +25,42 @@ var docx = (function () {
     });
   }
 
+  // function extract(content) {
+  //   bundle.extractParaghraphs(content, function (para) {
+  //     console.log(para);
+  //     para.each(function (i, p) {
+  //       if (p['w:r']) {
+  //         bundle.extractText(p, function (text) {
+  //           console.log(text);
+  //         });
+  //       }
+  //     });
+  //   });
+  // }
+
   function extract(content) {
-    bundle.extractParaghraphs(content, function (para) {
-      console.log(para);
-      para.each(function (i, p) {
+    bundle.extractParaghraphs(content).then(function (paragraphs) {
+      console.log(paragraphs);
+      var text = [];
+      paragraphs.each(function (i, p) {
         if (p['w:r']) {
-          bundle.extractText(p, function (text) {
-            console.log(text);
-          });
+          text.push(bundle.extractText(p));
         }
       });
+      var docDefinition = {content: text};
+      print(docDefinition);
     });
   }
 
-  function print(content) {
-    var doc = new jsPDF()
-    doc.text(content, 10, 10);
-    doc.save('output.pdf')
+  function print(docDefinition) {
+    // var doc = new jsPDF({
+    //   orientation: 'p',
+    //   unit: 'mm',
+    //   format: 'a4',
+    // });
+    // doc.text(content, 10, 10);
+    // doc.save('output.pdf');
+    pdfMake.createPdf(docDefinition).open();
   }
 
   return {
@@ -50,6 +68,7 @@ var docx = (function () {
     extract: extract,
     print: print
   }
+
 })();
 
 
