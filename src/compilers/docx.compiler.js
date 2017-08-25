@@ -16,7 +16,18 @@ var extractText = function(para, cb){
     cb(para['w:r']['w:t'].text());
 }
 
+
+
 module.exports = {
     extractParaghraphs: extractParaghraphs,
-    extractText: extractText
+    extractText: extractText    
 }
+
+
+
+
+
+
+
+
+

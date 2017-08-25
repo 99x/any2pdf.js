@@ -5,6 +5,7 @@
 var docx = (function () {
   'use strict';
 
+  var Q = require('q');
   zip.workerScriptsPath = 'lib/zipjs/';
   //Configuration files
   var configs = ['word/document.xml'];
@@ -26,11 +27,11 @@ var docx = (function () {
   }
 
   function extract(content) {
-    bundle.extractParaghraphs(content, function(para){
+    bundle.extractParaghraphs(content, function (para) {
       console.log(para);
-      para.each(function(i, p){
-        if(p['w:r']){
-          bundle.extractText(p, function(text){
+      para.each(function (i, p) {
+        if (p['w:r']) {
+          bundle.extractText(p, function (text) {
             console.log(text);
           });
         }
@@ -38,9 +39,16 @@ var docx = (function () {
     });
   }
 
+  function print(content) {
+    var doc = new jsPDF()
+    doc.text(content, 10, 10);
+    doc.save('output.pdf')
+  }
+
   return {
     compile: compile,
-    extract: extract
+    extract: extract,
+    print: print
   }
 })();
 
